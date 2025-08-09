@@ -36,7 +36,7 @@ def fetch_comments(video_id, max_comments=100):
         st.error(f"An error occurred while fetching comments: {e}")
         return []
     
-    return comments_list
+    return comments_list[:100]
 
 def summarize_comments_with_groq(groq_api_key, model_name, comments):
     """
@@ -106,6 +106,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
