@@ -1,0 +1,4 @@
+streamlit
+groq
+youtube-comment-downloader
+pandas
