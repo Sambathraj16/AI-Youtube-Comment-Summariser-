@@ -38,7 +38,7 @@ def fetch_comments(video_id, max_comments=100):
     
     return comments_list[:100]
 
-def summarize_comments_with_groq(groq_api_key, model_name, comments):
+def summarize_comments_with_groq(groq_api_key, model_name, comments,instructions):
     """
     Sends the comments to the Groq API for summarization.
     """
@@ -53,6 +53,7 @@ def summarize_comments_with_groq(groq_api_key, model_name, comments):
     Your task is to take a list of YouTube comments and condense them intopoints. 
     The points should capture the main topics, sentiments, and recurring themes found in the comments. 
     Be concise and use a numbered list format.
+    Instructions:{instructions}
 
     Here are the comments:
     { " ".join(comments) }
@@ -82,6 +83,7 @@ with st.container():
     youtube_url = st.text_input("YouTube Video URL", placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     groq_api_key = st.text_input("Groq API Key", type="password", placeholder="Enter your Groq API key here")
     model_name = st.text_input("Groq Model Name", value="llama3-8b-8192", placeholder="e.g., llama3-8b-8192")
+    instructions=st.text_input("Kindly give instructions to AI",placeholder="Be precise and concise")
 
     if st.button("Summarize Comments", use_container_width=True, type="primary"):
         if not youtube_url or not groq_api_key or not model_name:
@@ -96,7 +98,7 @@ with st.container():
                     if not comments:
                         st.info("No comments were found for this video or there was an issue fetching them.")
                     else:
-                        summary = summarize_comments_with_groq(groq_api_key, model_name, comments)
+                        summary = summarize_comments_with_groq(groq_api_key, model_name, comments,instructions)
                         
                         st.header("2. Summary of Comments")
                         st.markdown(summary)
@@ -106,6 +108,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
