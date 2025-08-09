@@ -27,7 +27,7 @@ def fetch_comments(video_id, max_comments=50):
     comments_list = []
     try:
         # Fetching comments using the downloader library
-        comments_gen = downloader.get_comments(video_id, sort_by=SORT_BY_POPULAR) # 1 for newest comments, 2 for oldest
+        comments_gen = downloader.get_comments(video_id, sort_by=0) # 1 for newest comments, 0 for popular
         for comment in comments_gen:
             comments_list.append(comment['text'])
             if len(comments_list) >= max_comments:
@@ -111,6 +111,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
