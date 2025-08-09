@@ -27,7 +27,7 @@ def fetch_comments(video_id, max_comments=100):
     comments_list = []
     try:
         # Fetching comments using the downloader library
-        comments_gen = downloader.get_comments_from_youtube(video_id, sort_by=1) # 1 for newest comments, 2 for oldest
+        comments_gen = downloader.get_comments(video_id, sort_by=1) # 1 for newest comments, 2 for oldest
         for comment in comments_gen:
             comments_list.append(comment['text'])
             if len(comments_list) >= max_comments:
@@ -104,4 +104,5 @@ with st.container():
                         st.header("3. Raw Comments (First 50)")
                         # Display raw comments for context
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
+
                         st.dataframe(comment_df, use_container_width=True)
