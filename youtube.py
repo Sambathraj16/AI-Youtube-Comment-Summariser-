@@ -45,7 +45,7 @@ def summarize_comments_with_groq(groq_api_key, model_name, comments):
     if not comments:
         return "No comments to summarize."
 
-    client = Groq(api_api_key=groq_api_key,model_name=model_name)
+    client = Groq(api_key=groq_api_key,model_name=model_name)
     
     # Create the prompt for the LLM
     prompt = f"""
@@ -106,4 +106,5 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
