@@ -18,7 +18,7 @@ def get_video_id(url):
             return match.group(1)
     return None
 
-def fetch_comments(video_id, max_comments=100):
+def fetch_comments(video_id, max_comments=50):
     """
     Fetches comments for a given YouTube video ID using youtube-comment-downloader.
     This may not be able to fetch all comments if the video is very popular.
@@ -27,7 +27,7 @@ def fetch_comments(video_id, max_comments=100):
     comments_list = []
     try:
         # Fetching comments using the downloader library
-        comments_gen = downloader.get_comments(video_id, sort_by=1) # 1 for newest comments, 2 for oldest
+        comments_gen = downloader.get_comments(video_id, sort_by=SORT_BY_POPULAR) # 1 for newest comments, 2 for oldest
         for comment in comments_gen:
             comments_list.append(comment['text'])
             if len(comments_list) >= max_comments:
@@ -36,9 +36,9 @@ def fetch_comments(video_id, max_comments=100):
         st.error(f"An error occurred while fetching comments: {e}")
         return []
     
-    return comments_list[:100]
+    return comments_list
 
-def summarize_comments_with_groq(groq_api_key, model_name, comments,instructions):
+def summarize_comments_with_groq(groq_api_key, model_name, comments,instructions="Be precise"):
     """
     Sends the comments to the Groq API for summarization.
     """
@@ -95,9 +95,12 @@ with st.container():
                     st.error("Invalid YouTube URL provided. Please check the link and try again.")
                 else:
                     comments = fetch_comments(video_id)
+                
                     if not comments:
                         st.info("No comments were found for this video or there was an issue fetching them.")
                     else:
+                        if len(comments)>50:
+                            comments=comments[:40]
                         summary = summarize_comments_with_groq(groq_api_key, model_name, comments,instructions)
                         
                         st.header("2. Summary of Comments")
@@ -108,6 +111,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
