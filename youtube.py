@@ -82,8 +82,8 @@ with st.container():
     st.header("1. Enter Video & API Details")
     youtube_url = st.text_input("YouTube Video URL", placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     groq_api_key = st.text_input("Groq API Key", type="password", placeholder="Enter your Groq API key here")
-    model_name = st.text_input("Groq Model Name", value="llama3-8b-8192", placeholder="e.g., llama3-8b-8192")
-    instructions=st.text_input("Kindly give instructions to AI",placeholder="Be precise and concise")
+    model_name = st.text_input("Groq Model Name", value="gemma2-9b-it", placeholder="gemma2-9b-it")
+    instructions=st.text_input("Kindly give instructions to AI  (Optional)",value=None,placeholder="Be precise and concise")
 
     if st.button("Summarize Comments", use_container_width=True, type="primary"):
         if not youtube_url or not groq_api_key or not model_name:
@@ -111,6 +111,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
