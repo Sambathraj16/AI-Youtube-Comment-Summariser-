@@ -51,8 +51,8 @@ def summarize_comments_with_groq(groq_api_key, model_name, comments,instructions
     prompt = f"""
     You are a professional content summarizer. 
     Your task is to take a list of YouTube comments and condense them intopoints. 
-    The points should capture the main topics, sentiments, and recurring themes found in the comments. 
-    Be concise and use a numbered list format.
+    The points should capture the main topics, sentiments, and recurring themes found in the comments.
+    Capture all types of sentiments.
     Instructions:{instructions}
 
     Here are the comments:
@@ -111,6 +111,7 @@ with st.container():
                         comment_df = pd.DataFrame(comments[:50], columns=["Comment Text"])
 
                         st.dataframe(comment_df, use_container_width=True)
+
 
 
 
