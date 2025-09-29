@@ -151,7 +151,7 @@ with st.sidebar:
     
     model_name = st.selectbox(
         "Model",
-        ["llama-3.3-70b-versatile", "gemma2-9b-it", "mixtral-8x7b-32768"],
+        ["meta-llama/llama-guard-4-12b", "gemma2-9b-it", "meta-llama/llama-prompt-guard-2-22m","groq/compound","llama-3.1-8b-instant","qwen/qwen3-32b","openai/gpt-oss-20b"],
         index=1
     )
     
@@ -282,3 +282,4 @@ if st.session_state.summary:
 
 st.markdown("---")
 st.caption("Built with Streamlit + Groq | Data sourced from public YouTube comments")
+
